@@ -5,22 +5,46 @@ public class Inicializador {
         Gerenciarcontas gerenciarContas = new Gerenciarcontas();
         int opcao = -1;
 
-        do{
+        boolean Exibido = false;
+
+        do {
             if (gerenciarContas.mostrarContas().isEmpty()) {
-            System.out.println("Olá, seja bem-vindo ao sistema!");
-            System.out.println("\nPor favor, escolha uma das opções abaixo:");
+                if (Exibido == false) {
+                    System.out.println("Olá, seja bem-vindo ao sistema!");
+                    System.out.println("\nPor favor, escolha uma das opções abaixo:");
 
-            System.out.println("1 - Criar conta");
-            System.out.println("0 - Sair");
+                    System.out.println("1 - Criar conta");
+                    System.out.println("0 - Sair");
 
-            opcao = Leitor.lerInteiro();
+                    Exibido = true;
+                }
 
-            gerenciarContas.criarConta(null);
+                opcao = Leitor.lerInteiro();
 
-            }else {
-             System.out.println("Ja existe uma conta criada!");
+                if (opcao == 1) {
+                    gerenciarContas.criarConta();
+                }
+            } else {
+
+                System.out.println("Olá, seja bem-vindo ao sistema!");
+                System.out.println("\nPor favor, escolha uma das opções abaixo:");
+
+                System.out.println("1- Criar conta");
+                System.out.println("2- Lançamento");
+                System.out.println("3- Extrato");
+                System.out.println("4- Relatorio");
+
+                System.out.println("0 - Sair");
+
+                opcao = Leitor.lerInteiro();
+                switch (opcao) {
+                    case 1:
+
+                    case 2:
+
+                }
             }
 
-        }while(opcao != 0);
+        } while (opcao != 0);
     }
 }
