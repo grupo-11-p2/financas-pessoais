@@ -4,11 +4,9 @@ import java.util.List;
 public class Gerenciarcontas {
     private final List<Conta> listaContas = new ArrayList<Conta>();
 
-    public void criarConta(Conta conta) {
-        if (conta == null) {
-            throw new IllegalArgumentException("A conta não pode ser nula.");
-        }
-        listaContas.add(conta);
+    public void criarConta(String NomeConta) {
+        Conta conta = new Conta();
+        
     }
 
     public List<Conta> mostrarContas() {

@@ -29,7 +29,7 @@ public abstract class Transacao {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Digite a descrição desejada: ");
-        descricao = scanner.nextLine();
+        descricao = Leitor.lerTexto();
 
         scanner.close();
         //Precisa de ajuste posteriormente
