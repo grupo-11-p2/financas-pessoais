@@ -39,11 +39,8 @@ public class Relatorio {
         return resultado;
     }
 
-    public Extrato mostrarExtratoTotal(
-        int mes,
-        int ano,
-        Categoria categoria
-    ) {
+    public Extrato mostrarExtratoTotal(int mes,int ano, Categoria categoria) 
+    {
         validarMes(mes);
         Extrato resultado = new Extrato();
 

@@ -9,7 +9,7 @@ public class Extrato {
     }
 
     public void DeletarExtrato(int IdExistente) {
-        for (i = 0; i < (ListaTransacao.size()); i++) {
+        for (int i = 0; i < (ListaTransacao.size()); i++) {
             Transacao TransacaoSelecionada = ListaTransacao.get(i);
 
             if (TransacaoSelecionada.id == IdExistente) {
