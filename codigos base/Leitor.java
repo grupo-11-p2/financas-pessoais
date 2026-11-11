@@ -15,12 +15,25 @@ public class Leitor {
         return valor;
     }
 
+    public static double lerDouble(String mensagem) {
+        System.out.print(mensagem);
+        double valor = scanner.nextDouble();
+        scanner.nextLine(); // Limpa o buffer de memória
+        return valor;
+    }
+
     public static String lerTexto() {
         return scanner.nextLine();
     }
 
     public static int lerInteiro() {
         int valor = scanner.nextInt();
+        scanner.nextLine(); // Limpa o buffer de memória
+        return valor;
+    }
+
+    public static double lerDouble() {
+        double valor = scanner.nextDouble();
         scanner.nextLine(); // Limpa o buffer de memória
         return valor;
     }
