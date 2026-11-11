@@ -22,14 +22,5 @@ public class Inicializador {
             }
 
         }while(opcao != 0);
-        /*
-        String mensagem = """
-    Olá, seja bem-vindo ao sistema!
-    Por favor, escolha uma das opç1ões abaixo:
-    1 - Criar conta
-    2 - Sair
-    """;
-        
-        */
     }
 }
