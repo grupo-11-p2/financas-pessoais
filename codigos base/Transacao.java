@@ -5,7 +5,7 @@ public abstract class Transacao {
     private static int ContadorId = 0;
 
     private int id;
-    private Integer data;
+    private int data;
     private Double valor;
     private String descricao;
     private Categoria categoria;
@@ -36,8 +36,8 @@ public abstract class Transacao {
     }
    }
 
-public void colocarData(){
-    if (data != null){
+    public void colocarData(){
+    if (data == 0){
         data = Leitor.lerInteiro("Digite a data: ");
     }
    }
