@@ -6,7 +6,8 @@ public class Gerenciarcontas {
 
     public void criarConta(String NomeConta) {
         Conta conta = new Conta();
-        
+        conta.setNome(NomeConta);
+        listaContas.add(conta);
     }
 
     public List<Conta> mostrarContas() {
