@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-import java.util.Scanner;
 
 public abstract class Transacao {
 
@@ -10,9 +9,9 @@ public abstract class Transacao {
     private Double valor;
     private String descricao;
     private Categoria categoria;
-
     private Conta contaRelacionada;
     private String tipo;
+    private String nomecategoria;
 
    public void aplicar(Conta conta) {}
 
@@ -24,16 +23,28 @@ public abstract class Transacao {
     }
    }
 
+   public void colocarCategoria(){
+    if (nomecategoria != null){
+        categoria = new Categoria(nomecategoria);
+        this.nomecategoria = Leitor.lerTexto("Digite a categoria desejada: ");
+    }
+   }
+
+   public void colocarValor(){
+    if (valor != null){
+        valor = Leitor.lerDouble("Digite o valor: ");
+    }
+   }
+
+   public void colocarData(){
+    if (data != null){
+        data = LocalDate.parse(Leitor.lerTexto("Digite a data (AAAA-MM-DD): "));
+    }
+   }
+
    public void colocarDescricao(){
     if (descricao != null){
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Digite a descrição desejada: ");
-        descricao = Leitor.lerTexto();
-
-        scanner.close();
-        //Precisa de ajuste posteriormente
+        descricao = Leitor.lerTexto("Digite a descrição desejada: ");
     }
-        
    }
 }
