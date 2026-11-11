@@ -2,18 +2,34 @@ import java.util.Scanner;
 
 public class Inicializador {
     public static void main(String[] args) {
-        String opcao;
+        Gerenciarcontas gerenciarContas = new Gerenciarcontas();
+        int opcao = -1;
 
-        System.out.println("\n===== FINANÇAS PESSOAIS =====");
-        System.out.println("Seja bem-vindo ao Sistema de Finanças Pessoais!");
-        System.out.println("\nPrimeiramente, registre uma nova conta.");
-        System.out.println("\nPressione Y para continuar.");
-        
-        do {
-            opcao = Leitor.lerTexto();
-        } while (!opcao.equalsIgnoreCase("Y"));
+        do{
+            if (gerenciarContas.mostrarContas().isEmpty()) {
+            System.out.println("Olá, seja bem-vindo ao sistema!");
+            System.out.println("\nPor favor, escolha uma das opções abaixo:");
 
-        System.out.println("Vamos começar!");
+            System.out.println("1 - Criar conta");
+            System.out.println("0 - Sair");
+
+            opcao = Leitor.lerInteiro();
+
+            gerenciarContas.criarConta(null);
+
+            }else {
+             System.out.println("Ja existe uma conta criada!");
+            }
+
+        }while(opcao != 0);
+        /*
+        String mensagem = """
+    Olá, seja bem-vindo ao sistema!
+    Por favor, escolha uma das opç1ões abaixo:
+    1 - Criar conta
+    2 - Sair
+    """;
         
+        */
     }
 }
