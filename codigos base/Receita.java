@@ -1,13 +1,6 @@
-public class Receita {
-    private int valor;
-    private Conta conta;
+public class Receita extends Transacao{
+    public void Registrar() {
 
-    public Receita(int valor, Conta conta) {
-        this.valor = valor;
-        this.conta = conta;
-    }
-
-    public void aplicar() {
-        this.conta.aplicarSaldo(valor);
+        DefinirDados();
     }
 }

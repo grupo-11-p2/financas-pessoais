@@ -1,8 +1,7 @@
-import java.util.Scanner;
-
 public class Inicializador {
     public static void main(String[] args) {
         Gerenciarcontas gerenciarContas = new Gerenciarcontas();
+        Movimentacao movimentacao = new Movimentacao(gerenciarContas);
         int opcao = -1;
 
         boolean Exibido = false;
@@ -39,9 +38,11 @@ public class Inicializador {
                 opcao = Leitor.lerInteiro();
                 switch (opcao) {
                     case 1:
-
+                        gerenciarContas.criarConta();
+                        break;
                     case 2:
-
+                        movimentacao.IniciarLancamento();
+                        break;
                 }
             }
 
