@@ -1,51 +1,31 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Leitor {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static String lerTexto() {
-        return scanner.nextLine();
+        String texto = scanner.nextLine();
+
+        return texto;
     }
 
     public static String lerTexto(String mensagem) {
         System.out.print(mensagem);
-        return scanner.nextLine();
-    }
 
-    public static String LerNome() {
-        while (true) {
-            String nome = scanner.nextLine().trim();
-
-            int letras = 0;
-            for (char c : nome.toCharArray()) {
-                if (Character.isLetter(c)) {
-                    letras++;
-                }
-            }
-
-            if (letras < 4) {
-                System.out.println("O nome deve ter pelo menos 4 letras.");
-            } else {
-                return nome;
-            }
-        }
+        String texto = scanner.nextLine();
+        return texto;
     }
 
     public static String LerNome(String mensagem) {
         System.out.print(mensagem);
+        String nome;
 
         while (true) {
-            String nome = scanner.nextLine().trim();
+            nome = scanner.nextLine().trim().toUpperCase();
 
-            int letras = 0;
-            for (char c : nome.toCharArray()) {
-                if (Character.isLetter(c)) {
-                    letras++;
-                }
-            }
-
-            if (letras < 4) {
-                System.out.println("O nome deve ter pelo menos 4 letras.");
+            if (nome.length() < 4) {
+                System.out.println("O nome deve conter pelo menos 4 caracteres");
             } else {
                 return nome;
             }
@@ -53,42 +33,49 @@ public class Leitor {
     }
 
     public static int lerInteiro() {
-        while (true) {
-            String entrada = scanner.nextLine();
+        int entrada;
 
+        while (true) {
             try {
-                return Integer.parseInt(entrada.trim());
-            } catch (NumberFormatException e) {
-                System.out.println("Digite um número inteiro válido.");
-            }
+                entrada = scanner.nextInt();
+                scanner.nextLine();
+                return entrada;
+            } catch (InputMismatchException e) {
+                System.out.println("O valor digitado não é valido");
+                scanner.next();
+            } 
         }
     }
 
     public static int lerInteiro(String mensagem) {
         System.out.println(mensagem);
+        int entrada;
 
         while (true) {
-            String entrada = scanner.nextLine();
-
             try {
-                return Integer.parseInt(entrada.trim());
-            } catch (NumberFormatException e) {
+                entrada = scanner.nextInt();
+                scanner.nextLine();
+                return entrada;
+            } catch (InputMismatchException e) {
                 System.out.println("Digite um número inteiro válido.");
+                scanner.next();
             }
         }
     }
 
-    public static double lerDouble() {
-
-        double valor = scanner.nextDouble();
-        scanner.nextLine(); // Limpa o buffer de memória
-        return valor;
-    }
-
     public static double lerDouble(String mensagem) {
-        System.out.print(mensagem);
-        double valor = scanner.nextDouble();
-        scanner.nextLine(); // Limpa o buffer de memória
-        return valor;
+        System.out.println(mensagem);
+        double entrada;
+
+        while (true) {
+            try {
+                entrada = scanner.nextDouble();
+                scanner.nextLine();
+                return entrada;
+            } catch (InputMismatchException e) {
+                System.out.println("O valor digitado não é válido. Digite um número decimal:");
+                scanner.next();
+            } 
+        }
     }
 }

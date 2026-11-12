@@ -7,9 +7,30 @@ public class Gerenciarcontas {
     public void criarConta() {
 
         System.out.println("\nCriação de conta inicializada:");
-        String NomeConta = Leitor.LerNome("\nDigite um nome:");
+        String NomeConta;
+        Boolean ContaIgual;
 
-        System.out.println("Nome da conta sera: " + NomeConta);
+        while (true) {
+            NomeConta = Leitor.LerNome("\nDigite um nome:");
+            ContaIgual = false;
+
+            if (listaContas.isEmpty()) {
+                break;
+            }
+
+            for (int i = 0; i < listaContas.size(); i++) {
+                if (NomeConta.equals(listaContas.get(i).mostrarNome())) {
+                    System.out.println("O nome da conta já é existente, por favor digite outro nome!");
+
+                    ContaIgual = true;
+                    break;
+                }
+            }
+
+            if (ContaIgual == false) {
+                break;
+            }
+        }
 
         Conta conta = new Conta();
         conta.aplicarNome(NomeConta);
@@ -34,8 +55,10 @@ public class Gerenciarcontas {
             System.out.println((i + 1) + " - " + listaContas.get(i).mostrarNome());
         }
 
+        int escolha;
+
         while (true) {
-            int escolha = Leitor.lerInteiro("Opção: ");
+            escolha = Leitor.lerInteiro("Opção: ");
             if (escolha == 0) {
                 return null;
             }
@@ -62,8 +85,11 @@ public class Gerenciarcontas {
         for (int i = 0; i < contasDisponiveis.size(); i++) {
             System.out.println((i + 1) + " - " + contasDisponiveis.get(i).mostrarNome());
         }
+
+        int escolha;
+
         while (true) {
-            int escolha = Leitor.lerInteiro("Opção: ");
+            escolha = Leitor.lerInteiro("Opção: ");
             if (escolha == 0) {
                 return null;
             }
