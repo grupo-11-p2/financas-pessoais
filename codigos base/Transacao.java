@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public abstract class Transacao {
 
@@ -13,38 +14,64 @@ public abstract class Transacao {
     private String tipo;
     private String nomecategoria;
 
-   public void aplicar(Conta conta) {}
-
-   public void gerarId(){
-    if (id != 0) {
-        id = ContadorId + 1;
-    }else{
-        System.out.println("Aviso: Ja existe um id gerado");
+   public int gerarId() {
+        if (id != 0) {
+            System.out.println("Aviso: já existe um id gerado");
+            return id;
+        }
+        ContadorId++;
+        id = ContadorId;
+        return id;
     }
-   }
 
-   public void colocarCategoria(){
-    if (nomecategoria != null){
-        categoria = new Categoria(nomecategoria);
-        this.nomecategoria = Leitor.lerTexto("Digite a categoria desejada: ");
+    public void colocarData() {
+        while (true) {
+            try {
+                data = LocalDate.parse(Leitor.lerTexto("Digite a data (AAAA-MM-DD): "));
+                return;
+            } catch (DateTimeParseException e) {
+                System.out.println("Data inválida! Use o formato AAAA-MM-DD.");
+            }
+        }
     }
-   }
 
-   public void colocarValor(){
-    if (valor != null){
-        valor = Leitor.lerDouble("Digite o valor: ");
+    public void colocarValor() {
+        do {
+            valor = Leitor.lerDouble("Digite o valor: ");
+            if (valor <= 0) {
+                System.out.println("O valor deve ser maior que zero.");
+            }
+        } while (valor <= 0);
     }
-   }
 
-   public void colocarData(){
-    if (data != null){
-        data = LocalDate.parse(Leitor.lerTexto("Digite a data (AAAA-MM-DD): "));
+    public void colocarDescricao() {
+      //  descricao = Leitor.lerTextoLivre("Digite a descrição desejada: ");
     }
-   }
 
-   public void colocarDescricao(){
-    if (descricao != null){
-        descricao = Leitor.lerTexto("Digite a descrição desejada: ");
+    public void colocarCategoria() {
+        String nomeCategoria = Leitor.lerTexto("Digite a categoria desejada: ");
+    //    categoria = new Categoria(nomeCategoria);
     }
-   }
+
+    //jogar alguns metodos para leitor, refatorar leitor
+
+    public void DefinirDados() {
+        gerarId();
+        System.out.println("Id definido é: " + id);
+
+        colocarData();
+        System.out.println("Data definida é: " + data);
+
+        colocarValor();
+
+        colocarDescricao();
+        colocarCategoria();
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void aplicar(Conta conta) {
+    }
 }
