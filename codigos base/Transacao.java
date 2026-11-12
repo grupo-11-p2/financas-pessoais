@@ -2,76 +2,108 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 public abstract class Transacao {
+    private static int contadorId;
 
-    private static int ContadorId = 0;
-
-    private int id;
+    private final int id;
+    private final Conta conta;
+    private final String tipo;
     private LocalDate data;
-    private Double valor;
+    private double valor;
     private String descricao;
     private Categoria categoria;
-    private Conta contaRelacionada;
-    private String tipo;
-    private String nomecategoria;
 
-   public int gerarId() {
-        if (id != 0) {
-            System.out.println("Aviso: já existe um id gerado");
-            return id;
+    protected Transacao(Conta conta, String tipo) {
+        if (conta == null) {
+            throw new IllegalArgumentException("A conta não pode ser nula.");
         }
-        ContadorId++;
-        id = ContadorId;
-        return id;
+        this.conta = conta;
+        this.tipo = tipo;
+        this.id = ++contadorId;
     }
 
-    public void colocarData() {
+    public final void registrar() {
+        definirDados();
+        validar();
+        aplicarSaldo();
+        for (Conta contaAfetada : contasAfetadas()) {
+            contaAfetada.getExtrato().aplicarExtrato(this);
+        }
+    }
+
+    private void definirDados() {
+        System.out.println("Id definido é: " + id);
+
         while (true) {
             try {
                 data = LocalDate.parse(Leitor.lerTexto("Digite a data (AAAA-MM-DD): "));
-                return;
+                break;
             } catch (DateTimeParseException e) {
                 System.out.println("Data inválida! Use o formato AAAA-MM-DD.");
             }
         }
-    }
 
-    public void colocarValor() {
         do {
             valor = Leitor.lerDouble("Digite o valor: ");
-            if (valor <= 0) {
+            if (!Double.isFinite(valor) || valor <= 0) {
                 System.out.println("O valor deve ser maior que zero.");
             }
-        } while (valor <= 0);
+        } while (!Double.isFinite(valor) || valor <= 0);
+
+        descricao = Leitor.lerTexto("Digite a descrição: ");
+        String nomeCategoria = Leitor.lerTexto("Digite a categoria (ou deixe em branco): ");
+        if (nomeCategoria.trim().isEmpty()) {
+            categoria = null;
+        } else {
+            categoria = new Categoria();
+            categoria.definirNome(nomeCategoria.trim());
+        }
     }
 
-    public void colocarDescricao() {
-      //  descricao = Leitor.lerTextoLivre("Digite a descrição desejada: ");
+    protected abstract void validar();
+
+    protected abstract void aplicarSaldo();
+
+    protected Conta[] contasAfetadas() {
+        return new Conta[] { conta };
     }
 
-    public void colocarCategoria() {
-        String nomeCategoria = Leitor.lerTexto("Digite a categoria desejada: ");
-    //    categoria = new Categoria(nomeCategoria);
+    protected final Conta getConta() {
+        return conta;
     }
 
-    //jogar alguns metodos para leitor, refatorar leitor
-
-    public void DefinirDados() {
-        gerarId();
-        System.out.println("Id definido é: " + id);
-
-        colocarData();
-        System.out.println("Data definida é: " + data);
-
-        colocarValor();
-
-        colocarDescricao();
-        colocarCategoria();
+    public final int getId() {
+        return id;
     }
 
-    public double getValor() {
+    public final LocalDate getData() {
+        return data;
+    }
+
+    public final int getMes() {
+        return data == null ? 0 : data.getMonthValue();
+    }
+
+    public final int getAno() {
+        return data == null ? 0 : data.getYear();
+    }
+
+    public final double getValor() {
         return valor;
     }
 
-    public void aplicar(Conta conta) {
+    public final String getDescricao() {
+        return descricao;
+    }
+
+    public final Categoria getCategoria() {
+        return categoria;
+    }
+
+    public final Conta getContaRelacionada() {
+        return conta;
+    }
+
+    public final String getTipo() {
+        return tipo;
     }
 }

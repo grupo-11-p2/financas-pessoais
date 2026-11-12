@@ -1,13 +1,17 @@
-public class Despesa {
-    private int valor;
-    private Conta conta;
-
-    public Despesa(int valor, Conta conta) {
-        this.valor = valor;
-        this.conta = conta;
+public class Despesa extends Transacao {
+    public Despesa(Conta conta) {
+        super(conta, "Despesa");
     }
 
-    public void aplicar() {
-        this.conta.aplicarSaldo(valor);
+    @Override
+    protected void validar() {
+        if (getValor() > getConta().mostrarSaldo()) {
+            throw new IllegalStateException("Saldo insuficiente para realizar a despesa.");
+        }
+    }
+
+    @Override
+    protected void aplicarSaldo() {
+        getConta().debitar(getValor());
     }
 }
