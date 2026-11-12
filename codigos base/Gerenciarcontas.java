@@ -7,7 +7,7 @@ public class Gerenciarcontas {
     public void criarConta() {
 
         System.out.println("\nCriação de conta inicializada:");
-        String NomeConta = Leitor.lerTexto("\nDigite um nome:");
+        String NomeConta = Leitor.LerNome("\nDigite um nome:");
 
         System.out.println("Nome da conta sera: " + NomeConta);
 
