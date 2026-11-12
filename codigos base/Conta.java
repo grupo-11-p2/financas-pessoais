@@ -1,10 +1,7 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class Conta {
     private String nome;
     private double saldo = 0.0;
-    private Extrato extrato;
+    private final Extrato extrato = new Extrato();
 
     public void aplicarNome(String nome) {
         this.nome = nome;
@@ -20,5 +17,28 @@ public class Conta {
 
     public void aplicarSaldo(double valor) {
         this.saldo = valor;
+    }
+
+    public void creditar(double valor) {
+        validarValorPositivo(valor);
+        saldo += valor;
+    }
+
+    public void debitar(double valor) {
+        validarValorPositivo(valor);
+        if (valor > saldo) {
+            throw new IllegalStateException("Saldo insuficiente.");
+        }
+        saldo -= valor;
+    }
+
+    public Extrato getExtrato() {
+        return extrato;
+    }
+
+    private void validarValorPositivo(double valor) {
+        if (!Double.isFinite(valor) || valor <= 0) {
+            throw new IllegalArgumentException("O valor deve ser maior que zero.");
+        }
     }
 }
