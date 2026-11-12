@@ -43,9 +43,37 @@ public class Inicializador {
                     case 2:
                         movimentacao.IniciarLancamento();
                         break;
+                    case 3:
+                        exibirExtrato(gerenciarContas);
+                        break;
+                    case 4:
+                        gerarRelatorio(gerenciarContas);
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        System.out.println("Opção inválida!");
                 }
             }
 
         } while (opcao != 0);
+    }
+
+    private static void exibirExtrato(Gerenciarcontas gerenciarContas) {
+        Conta conta = gerenciarContas.SelecionarConta();
+        if (conta == null) {
+            return;
+        }
+
+        conta.getExtrato().exibir(conta);
+    }
+
+    private static void gerarRelatorio(Gerenciarcontas gerenciarContas) {
+        Conta conta = gerenciarContas.SelecionarConta();
+        if (conta == null) {
+            return;
+        }
+
+        new Relatorio(conta.getExtrato()).gerarRelatorio(conta.mostrarNome());
     }
 }

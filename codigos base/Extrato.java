@@ -23,4 +23,30 @@ public class Extrato {
     public List<Transacao> getListaTransacao() {
         return new ArrayList<>(listaTransacao);
     }
+
+    public void exibir(Conta conta) {
+        if (conta == null) {
+            throw new IllegalArgumentException("A conta não pode ser nula.");
+        }
+
+        System.out.println("\nExtrato da conta " + conta.mostrarNome());
+        exibirTransacoes();
+        System.out.printf("Saldo atual: R$ %.2f%n", conta.mostrarSaldo());
+    }
+
+    public void exibirTransacoes() {
+        if (listaTransacao.isEmpty()) {
+            System.out.println("Nenhuma transação encontrada.");
+            return;
+        }
+
+        for (Transacao transacao : listaTransacao) {
+            String nomeCategoria = transacao.getCategoria() == null
+                    ? "Sem categoria"
+                    : transacao.getCategoria().getNome();
+            System.out.printf("ID: %d | %s | %s | R$ %.2f | %s | Categoria: %s%n",
+                    transacao.getId(), transacao.getData(), transacao.getTipo(),
+                    transacao.getValor(), transacao.getDescricao(), nomeCategoria);
+        }
+    }
 }
