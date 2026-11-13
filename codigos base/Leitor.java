@@ -17,7 +17,7 @@ public class Leitor {
         return texto;
     }
 
-    public static String LerNome(String mensagem) {
+    public static String lerNome(String mensagem) {
         System.out.print(mensagem);
         String nome;
 
@@ -43,7 +43,7 @@ public class Leitor {
             } catch (InputMismatchException e) {
                 System.out.println("O valor digitado não é valido");
                 scanner.next();
-            } 
+            }
         }
     }
 
@@ -75,7 +75,19 @@ public class Leitor {
             } catch (InputMismatchException e) {
                 System.out.println("O valor digitado não é válido. Digite um número decimal:");
                 scanner.next();
-            } 
+            }
+        }
+    }
+
+    public static int lerId(Extrato extrato) {
+        while (true) {
+            int entrada = lerInteiro();
+
+            if (entrada > 0 && extrato.VerificarId(entrada)) {
+                return entrada;
+            }
+
+            System.out.println("O id digitado não é válido");
         }
     }
 }

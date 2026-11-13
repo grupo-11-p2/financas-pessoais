@@ -40,6 +40,7 @@ public class Extrato {
             return;
         }
 
+        System.out.println("\n");
         for (Transacao transacao : listaTransacao) {
             String nomeCategoria = transacao.getCategoria() == null
                     ? "Sem categoria"
@@ -48,5 +49,17 @@ public class Extrato {
                     transacao.getId(), transacao.getData(), transacao.getTipo(),
                     transacao.getValor(), transacao.getDescricao(), nomeCategoria);
         }
+    }
+
+    public boolean VerificarId(int numero) {
+        for (int i = 0; i < listaTransacao.size(); i++) {
+            int idselecionado = listaTransacao.get(i).getId();
+            
+            if (numero == idselecionado){
+                return true;
+            }
+        }
+
+        return false;
     }
 }
