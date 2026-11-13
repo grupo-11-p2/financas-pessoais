@@ -54,12 +54,21 @@ public class Extrato {
     public boolean VerificarId(int numero) {
         for (int i = 0; i < listaTransacao.size(); i++) {
             int idselecionado = listaTransacao.get(i).getId();
-            
-            if (numero == idselecionado){
+
+            if (numero == idselecionado) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    public Transacao buscarPorId(int id) {
+        for (Transacao transacao : listaTransacao) {
+            if (transacao.getId() == id) {
+                return transacao;
+            }
+        }
+        return null;
     }
 }

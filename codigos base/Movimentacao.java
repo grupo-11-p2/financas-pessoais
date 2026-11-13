@@ -36,6 +36,7 @@ public class Movimentacao {
                     break;
                 case 4:
                     editarTransacao();
+                    break;
                 case 5:
                     cancelarTransacao();
                     break;
@@ -57,28 +58,48 @@ public class Movimentacao {
     }
 
     private void cancelarTransacao() {
-        if (conta != null) {
+        if (conta == null) {
+            System.out.println("Não há movimentação na conta!");
+        } else {
             Extrato extrato = conta.getExtrato();
             extrato.exibirTransacoes();
 
-            System.out.println("\nDigite o Id da transacao que deseja modificar:");
+            System.out.println("\nDigite o Id da transacao que deseja cancelar:");
             int id = Leitor.lerId(extrato);
 
-            
-            extrato.DeletarExtrato(id);
-        }else{
-            System.out.println("Não a movimentação na conta!");
+            Transacao transacao = extrato.buscarPorId(id);
+
+            try {
+                transacao.cancelar();
+                System.out.println("Transação cancelada com sucesso.");
+            } catch (IllegalStateException e) {
+                System.out.println("Não foi possível cancelar a transação: " + e.getMessage());
+            }
         }
     }
 
     public void editarTransacao() {
-        Extrato extrato = conta.getExtrato();
-        extrato.exibirTransacoes();
+        if (conta == null) {
+            System.out.println("Não há movimentação na conta!");
+        } else {
+            Extrato extrato = conta.getExtrato();
+            extrato.exibirTransacoes();
 
-        System.out.println("\nDigite o Id da transacao que deseja modificar:");
-        int id = Leitor.lerId(extrato);
+            System.out.println("\nDigite o Id da transacao que deseja editar:");
+            int id = Leitor.lerId(extrato);
 
-        Sytem.out.println("")
+            double novoValor = Leitor.lerDouble("\nDigite o novo valor:");
+
+            Transacao transacao = extrato.buscarPorId(id);
+
+            try {
+                if (transacao.editar(novoValor)) {
+                    System.out.println("Transação editada com sucesso.");
+                }
+            } catch (IllegalArgumentException | IllegalStateException e) {
+                System.out.println("Não foi possível editar a transação: " + e.getMessage());
+            }
+        }
     }
 }
 
@@ -87,7 +108,7 @@ public class Movimentacao {
  * Leitor.lerInteiro("\nDigite o Id da transacao que deseja modificar:");
  * extrato.DeletarExtrato(numero);
  * 
- *  do{
-                numero = Leitor.lerInteiro();
-            }while (extrato.VerificarId(numero));
+ * do{
+ * numero = Leitor.lerInteiro();
+ * }while (extrato.VerificarId(numero));
  */

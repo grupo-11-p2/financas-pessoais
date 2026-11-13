@@ -63,6 +63,10 @@ public abstract class Transacao {
 
     protected abstract void aplicarSaldo();
 
+    public abstract void cancelar();
+
+    public abstract boolean editar(double novoValor);
+
     protected Conta[] contasAfetadas() {
         return new Conta[] { conta };
     }
@@ -89,6 +93,13 @@ public abstract class Transacao {
 
     public final double getValor() {
         return valor;
+    }
+
+    protected void setValor(double valor) {
+        if (!Double.isFinite(valor) || valor <= 0) {
+            throw new IllegalArgumentException("O valor deve ser maior que zero.");
+        }
+        this.valor = valor;
     }
 
     public final String getDescricao() {
