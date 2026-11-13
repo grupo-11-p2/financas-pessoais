@@ -11,7 +11,7 @@ public class Gerenciarcontas {
         Boolean ContaIgual;
 
         while (true) {
-            NomeConta = Leitor.LerNome("\nDigite um nome:");
+            NomeConta = Leitor.lerNome("\nDigite um nome:");
             ContaIgual = false;
 
             if (listaContas.isEmpty()) {
