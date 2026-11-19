@@ -12,6 +12,7 @@
 
 # Package Files #
 *.jar
+!/gson-2.15.0.jar
 *.war
 *.nar
 *.ear
