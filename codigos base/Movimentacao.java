@@ -61,7 +61,7 @@ public class Movimentacao {
         if (conta == null) {
             System.out.println("Não há movimentação na conta!");
         } else {
-            Extrato extrato = conta.getExtrato();
+            Extrato extrato = conta.puxarExtrato();
             extrato.exibirTransacoes();
 
             System.out.println("\nDigite o Id da transacao que deseja cancelar:");
@@ -82,7 +82,7 @@ public class Movimentacao {
         if (conta == null) {
             System.out.println("Não há movimentação na conta!");
         } else {
-            Extrato extrato = conta.getExtrato();
+            Extrato extrato = conta.puxarExtrato();
             extrato.exibirTransacoes();
 
             System.out.println("\nDigite o Id da transacao que deseja editar:");

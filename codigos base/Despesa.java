@@ -12,13 +12,13 @@ public class Despesa extends Transacao {
 
     @Override
     protected void aplicarSaldo() {
-        getConta().debitar(getValor());
+        debitar(getValor());
     }
 
     @Override
     public void cancelar() {
-        getConta().creditar(getValor());
-        getConta().getExtrato().DeletarExtrato(getId());
+        creditar(getValor());
+        getConta().puxarExtrato().DeletarExtrato(getId());
     }
 
     @Override
@@ -34,9 +34,9 @@ public class Despesa extends Transacao {
         }
 
         if (diferenca > 0) {
-            getConta().debitar(diferenca);
+            debitar(diferenca);
         } else if (diferenca < 0) {
-            getConta().creditar(-diferenca);
+            creditar(-diferenca);
         }
 
         setValor(novoValor);

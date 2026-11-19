@@ -66,6 +66,8 @@ public class Relatorio {
                 calcularTotalPorTipo(transacoes, "Transferencia"));
     }
 
+    
+
     public Extrato mostrarExtratoTotal(int mes, int ano) {
         validarMes(mes);
         validarAno(ano);

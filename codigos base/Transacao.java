@@ -26,7 +26,7 @@ public abstract class Transacao {
         validar();
         aplicarSaldo();
         for (Conta contaAfetada : contasAfetadas()) {
-            contaAfetada.getExtrato().aplicarExtrato(this);
+            contaAfetada.puxarExtrato().aplicarExtrato(this);
         }
     }
 
@@ -73,6 +73,36 @@ public abstract class Transacao {
 
     protected final Conta getConta() {
         return conta;
+    }
+
+    protected final void creditar(double valor) {
+        creditar(conta, valor);
+    }
+
+    protected final void creditar(Conta conta, double valor) {
+        validarOperacaoSaldo(conta, valor);
+        conta.aplicarSaldo(conta.mostrarSaldo() + valor);
+    }
+
+    protected final void debitar(double valor) {
+        debitar(conta, valor);
+    }
+
+    protected final void debitar(Conta conta, double valor) {
+        validarOperacaoSaldo(conta, valor);
+        if (valor > conta.mostrarSaldo()) {
+            throw new IllegalStateException("Saldo insuficiente.");
+        }
+        conta.aplicarSaldo(conta.mostrarSaldo() - valor);
+    }
+
+    private void validarOperacaoSaldo(Conta conta, double valor) {
+        if (conta == null) {
+            throw new IllegalArgumentException("A conta não pode ser nula.");
+        }
+        if (!Double.isFinite(valor) || valor <= 0) {
+            throw new IllegalArgumentException("O valor deve ser maior que zero.");
+        }
     }
 
     public final int getId() {

@@ -1,4 +1,6 @@
 public class Transferencia extends Transacao {
+    
+
     private final Conta contaDestino;
 
     public Transferencia(Conta contaOrigem, Conta contaDestino) {
@@ -21,8 +23,8 @@ public class Transferencia extends Transacao {
 
     @Override
     protected void aplicarSaldo() {
-        getConta().debitar(getValor());
-        contaDestino.creditar(getValor());
+        debitar(getValor());
+        creditar(contaDestino, getValor());
     }
 
     @Override
@@ -39,10 +41,10 @@ public class Transferencia extends Transacao {
         if (contaDestino.mostrarSaldo() - getValor() < 0) {
             throw new IllegalStateException("a conta de destino não tem saldo para devolver.");
         }
-        contaDestino.debitar(getValor());
-        getConta().creditar(getValor());
-        for (Conta c : contasAfetadas()) {
-            c.getExtrato().DeletarExtrato(getId());
+        debitar(contaDestino, getValor());
+        creditar(getValor());
+        for (Conta conta : contasAfetadas()) {
+            conta.puxarExtrato().DeletarExtrato(getId());
         }
     }
 
@@ -62,11 +64,11 @@ public class Transferencia extends Transacao {
         }
 
         if (diferenca > 0) {
-            getConta().debitar(diferenca);
-            contaDestino.creditar(diferenca);
+            debitar(diferenca);
+            creditar(contaDestino, diferenca);
         } else if (diferenca < 0) {
-            getConta().creditar(-diferenca);
-            contaDestino.debitar(-diferenca);
+            creditar(-diferenca);
+            debitar(contaDestino, -diferenca);
         }
 
         setValor(novoValor);

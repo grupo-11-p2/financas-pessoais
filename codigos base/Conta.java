@@ -19,26 +19,7 @@ public class Conta {
         this.saldo = valor;
     }
 
-    public void creditar(double valor) {
-        validarValorPositivo(valor);
-        saldo += valor;
-    }
-
-    public void debitar(double valor) {
-        validarValorPositivo(valor);
-        if (valor > saldo) {
-            throw new IllegalStateException("Saldo insuficiente.");
-        }
-        saldo -= valor;
-    }
-
-    public Extrato getExtrato() {
+    public Extrato puxarExtrato() {
         return extrato;
-    }
-
-    private void validarValorPositivo(double valor) {
-        if (!Double.isFinite(valor) || valor <= 0) {
-            throw new IllegalArgumentException("O valor deve ser maior que zero.");
-        }
     }
 }

@@ -9,16 +9,19 @@ public class Receita extends Transacao {
 
     @Override
     protected void aplicarSaldo() {
-        getConta().creditar(getValor());
+        creditar(getValor());
     }
+
+
+    
 
     @Override
     public void cancelar() {
         if (getConta().mostrarSaldo() - getValor() < 0) {
             throw new IllegalStateException("o saldo ficaria negativo.");
         }
-        getConta().debitar(getValor());
-        getConta().getExtrato().DeletarExtrato(getId());
+        debitar(getValor());
+        getConta().puxarExtrato().DeletarExtrato(getId());
     }
 
     @Override
@@ -34,9 +37,9 @@ public class Receita extends Transacao {
         }
 
         if (diferenca > 0) {
-            getConta().creditar(diferenca);
+            creditar(diferenca);
         } else if (diferenca < 0) {
-            getConta().debitar(-diferenca);
+            debitar(-diferenca);
         }
 
         setValor(novoValor);

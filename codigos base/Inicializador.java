@@ -65,7 +65,7 @@ public class Inicializador {
             return;
         }
 
-        conta.getExtrato().exibir(conta);
+        conta.puxarExtrato().exibir(conta);
     }
 
     private static void gerarRelatorio(Gerenciarcontas gerenciarContas) {
@@ -74,6 +74,6 @@ public class Inicializador {
             return;
         }
 
-        new Relatorio(conta.getExtrato()).gerarRelatorio(conta.mostrarNome());
+        new Relatorio(conta.puxarExtrato()).gerarRelatorio(conta.mostrarNome());
     }
 }
