@@ -18,7 +18,7 @@ Este repositório contém a implementação de um sistema de controle financeiro
 
 A arquitetura e o diagrama de classes do sistema podem ser visualizados no Lucidchart ou diretamente na pasta de documentação do repositório:
 
-- 🔗 **[Acessar Diagrama no Lucidchart](https://lucidchart.com/b85fd054-d149-44fb-85ce-db948ad39e3b/edit?viewport_loc=-5150%2C96%2C2689%2C2833%2CCHWEp-vi-RSFO&invitationId=inv_20ebadb3-428f-4281-8c48-c64228fbf2e5)**[cite: 1]
+- 🔗 **[Acessar Diagrama no Lucidchart]([https://lucidchart.com/b85fd054-d149-44fb-85ce-db948ad39e3b/edit?viewport_loc=-5150%2C96%2C2689%2C2833%2CCHWEp-vi-RSFO&invitationId=inv_20ebadb3-428f-4281-8c48-c64228fbf2e5](https://lucid.app/lucidchart/b85fd054-d149-44fb-85ce-db948ad39e3b/edit?page=HWEp-vi-RSFO&invitationId=inv_20ebadb3-428f-4281-8c48-c64228fbf2e5#))**[cite: 1]
 - 📄 **[Diagrama de Classes (PDF)](./docs/UML.pdf)**[cite: 1, 2]
 
 ### Principais Classes do Diagrama
