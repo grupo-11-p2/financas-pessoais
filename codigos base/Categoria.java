@@ -5,7 +5,7 @@ public class Categoria {
         this.nome = nome;
     }
 
-    public String getNome() {
+    public String puxarNome() {
         return nome;
     }
 }

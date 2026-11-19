@@ -5,20 +5,20 @@ public class Despesa extends Transacao {
 
     @Override
     protected void validar() {
-        if (getValor() > getConta().mostrarSaldo()) {
+        if (puxarValor() > puxarConta().mostrarSaldo()) {
             throw new IllegalStateException("Saldo insuficiente para realizar a despesa.");
         }
     }
 
     @Override
     protected void aplicarSaldo() {
-        debitar(getValor());
+        debitar(puxarValor());
     }
 
     @Override
     public void cancelar() {
-        creditar(getValor());
-        getConta().puxarExtrato().DeletarExtrato(getId());
+        creditar(puxarValor());
+        puxarConta().puxarExtrato().DeletarExtrato(puxarId());
     }
 
     @Override
@@ -27,9 +27,9 @@ public class Despesa extends Transacao {
             throw new IllegalArgumentException("O valor deve ser maior que zero.");
         }
 
-        double diferenca = novoValor - getValor(); // positivo = a despesa aumentou
+        double diferenca = novoValor - puxarValor(); // positivo = a despesa aumentou
 
-        if (getConta().mostrarSaldo() - diferenca < 0) {
+        if (puxarConta().mostrarSaldo() - diferenca < 0) {
             throw new IllegalStateException("saldo insuficiente para esse valor.");
         }
 
@@ -39,7 +39,7 @@ public class Despesa extends Transacao {
             creditar(-diferenca);
         }
 
-        setValor(novoValor);
+        aplicarValor(novoValor);
         return true;
     }
 }

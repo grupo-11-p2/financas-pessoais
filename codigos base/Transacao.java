@@ -71,7 +71,7 @@ public abstract class Transacao {
         return new Conta[] { conta };
     }
 
-    protected final Conta getConta() {
+    protected final Conta puxarConta() {
         return conta;
     }
 
@@ -105,46 +105,46 @@ public abstract class Transacao {
         }
     }
 
-    public final int getId() {
+    public final int puxarId() {
         return id;
     }
 
-    public final LocalDate getData() {
+    public final LocalDate puxarData() {
         return data;
     }
 
-    public final int getMes() {
+    public final int puxarMes() {
         return data == null ? 0 : data.getMonthValue();
     }
 
-    public final int getAno() {
+    public final int puxarAno() {
         return data == null ? 0 : data.getYear();
     }
 
-    public final double getValor() {
+    public final double puxarValor() {
         return valor;
     }
 
-    protected void setValor(double valor) {
+    protected void aplicarValor(double valor) {
         if (!Double.isFinite(valor) || valor <= 0) {
             throw new IllegalArgumentException("O valor deve ser maior que zero.");
         }
         this.valor = valor;
     }
 
-    public final String getDescricao() {
+    public final String puxarDescricao() {
         return descricao;
     }
 
-    public final Categoria getCategoria() {
+    public final Categoria puxarCategoria() {
         return categoria;
     }
 
-    public final Conta getContaRelacionada() {
+    public final Conta puxarContaRelacionada() {
         return conta;
     }
 
-    public final String getTipo() {
+    public final String puxarTipo() {
         return tipo;
     }
 }

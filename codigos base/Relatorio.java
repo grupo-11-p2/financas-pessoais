@@ -18,8 +18,8 @@ public class Relatorio {
     public double mostrarSaldoTotal() {
         double total = 0.0;
 
-        for (Transacao transacao : extrato.getListaTransacao()) {
-            total += transacao.getValor();
+        for (Transacao transacao : extrato.puxarListaTransacao()) {
+            total += transacao.puxarValor();
         }
 
         return total;
@@ -34,9 +34,9 @@ public class Relatorio {
         }
 
         double total = 0.0;
-        for (Transacao transacao : transacoes.getListaTransacao()) {
-            if (tipo.equalsIgnoreCase(transacao.getTipo())) {
-                total += transacao.getValor();
+        for (Transacao transacao : transacoes.puxarListaTransacao()) {
+            if (tipo.equalsIgnoreCase(transacao.puxarTipo())) {
+                total += transacao.puxarValor();
             }
         }
         return total;
@@ -55,7 +55,7 @@ public class Relatorio {
 
         System.out.printf("%nRelatório de %02d/%d - %s%n", mes, ano, nomeConta);
         if (categoriaSelecionada != null) {
-            System.out.println("Categoria: " + categoriaSelecionada.getNome());
+            System.out.println("Categoria: " + categoriaSelecionada.puxarNome());
         }
         transacoes.exibirTransacoes();
         System.out.printf("Total de receitas: R$ %.2f%n",
@@ -73,8 +73,8 @@ public class Relatorio {
         validarAno(ano);
         Extrato resultado = new Extrato();
 
-        for (Transacao transacao : extrato.getListaTransacao()) {
-            if (transacao.getMes() == mes && transacao.getAno() == ano) {
+        for (Transacao transacao : extrato.puxarListaTransacao()) {
+            if (transacao.puxarMes() == mes && transacao.puxarAno() == ano) {
                 resultado.aplicarExtrato(transacao);
             }
         }
@@ -88,10 +88,10 @@ public class Relatorio {
         validarAno(ano);
         Extrato resultado = new Extrato();
 
-        for (Transacao transacao : extrato.getListaTransacao()) {
-            if (transacao.getMes() == mes
-                    && transacao.getAno() == ano
-                    && categoriasIguais(transacao.getCategoria(), categoria)) {
+        for (Transacao transacao : extrato.puxarListaTransacao()) {
+            if (transacao.puxarMes() == mes
+                    && transacao.puxarAno() == ano
+                    && categoriasIguais(transacao.puxarCategoria(), categoria)) {
                 resultado.aplicarExtrato(transacao);
             }
         }
@@ -100,19 +100,19 @@ public class Relatorio {
     }
 
     public List<Categoria> puxarTodasCategorias() {
-        return puxarTodasCategorias(extrato.getListaTransacao());
+        return puxarTodasCategorias(extrato.puxarListaTransacao());
     }
 
     public List<Categoria> puxarTodasCategorias(int mes, int ano) {
         Extrato transacoes = mostrarExtratoTotal(mes, ano);
-        return puxarTodasCategorias(transacoes.getListaTransacao());
+        return puxarTodasCategorias(transacoes.puxarListaTransacao());
     }
 
     private List<Categoria> puxarTodasCategorias(List<Transacao> transacoes) {
         List<Categoria> categorias = new ArrayList<>();
 
         for (Transacao transacao : transacoes) {
-            Categoria categoriaTransacao = transacao.getCategoria();
+            Categoria categoriaTransacao = transacao.puxarCategoria();
 
             if (categoriaTransacao != null && !contemCategoria(categorias, categoriaTransacao)) {
                 categorias.add(categoriaTransacao);
@@ -163,7 +163,7 @@ public class Relatorio {
 
         System.out.println("Categoria para filtrar (0 - Todas):");
         for (int i = 0; i < categorias.size(); i++) {
-            System.out.printf("%d - %s%n", i + 1, categorias.get(i).getNome());
+            System.out.printf("%d - %s%n", i + 1, categorias.get(i).puxarNome());
         }
 
         while (true) {
@@ -208,8 +208,8 @@ public class Relatorio {
         if (primeira == null || segunda == null) {
             return false;
         }
-        String nomePrimeira = primeira.getNome();
-        String nomeSegunda = segunda.getNome();
+        String nomePrimeira = primeira.puxarNome();
+        String nomeSegunda = segunda.puxarNome();
         return nomePrimeira == null
                 ? nomeSegunda == null
                 : nomeSegunda != null && nomePrimeira.equalsIgnoreCase(nomeSegunda);

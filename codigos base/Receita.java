@@ -9,7 +9,7 @@ public class Receita extends Transacao {
 
     @Override
     protected void aplicarSaldo() {
-        creditar(getValor());
+        creditar(puxarValor());
     }
 
 
@@ -17,11 +17,11 @@ public class Receita extends Transacao {
 
     @Override
     public void cancelar() {
-        if (getConta().mostrarSaldo() - getValor() < 0) {
+        if (puxarConta().mostrarSaldo() - puxarValor() < 0) {
             throw new IllegalStateException("o saldo ficaria negativo.");
         }
-        debitar(getValor());
-        getConta().puxarExtrato().DeletarExtrato(getId());
+        debitar(puxarValor());
+        puxarConta().puxarExtrato().DeletarExtrato(puxarId());
     }
 
     @Override
@@ -30,9 +30,9 @@ public class Receita extends Transacao {
             throw new IllegalArgumentException("O valor deve ser maior que zero.");
         }
 
-        double diferenca = novoValor - getValor();
+        double diferenca = novoValor - puxarValor();
 
-        if (getConta().mostrarSaldo() + diferenca < 0) {
+        if (puxarConta().mostrarSaldo() + diferenca < 0) {
             throw new IllegalStateException("o saldo ficaria negativo.");
         }
 
@@ -42,7 +42,7 @@ public class Receita extends Transacao {
             debitar(-diferenca);
         }
 
-        setValor(novoValor);
+        aplicarValor(novoValor);
         return true;
     }
 }

@@ -13,14 +13,14 @@ public class Extrato {
 
     public void DeletarExtrato(int IdExistente) {
         for (int i = 0; i < listaTransacao.size(); i++) {
-            if (listaTransacao.get(i).getId() == IdExistente) {
+            if (listaTransacao.get(i).puxarId() == IdExistente) {
                 listaTransacao.remove(i);
                 return;
             }
         }
     }
 
-    public List<Transacao> getListaTransacao() {
+    public List<Transacao> puxarListaTransacao() {
         return new ArrayList<>(listaTransacao);
     }
 
@@ -42,18 +42,18 @@ public class Extrato {
 
         System.out.println("\n");
         for (Transacao transacao : listaTransacao) {
-            String nomeCategoria = transacao.getCategoria() == null
+            String nomeCategoria = transacao.puxarCategoria() == null
                     ? "Sem categoria"
-                    : transacao.getCategoria().getNome();
+                    : transacao.puxarCategoria().puxarNome();
             System.out.printf("ID: %d | %s | %s | R$ %.2f | %s | Categoria: %s%n",
-                    transacao.getId(), transacao.getData(), transacao.getTipo(),
-                    transacao.getValor(), transacao.getDescricao(), nomeCategoria);
+                    transacao.puxarId(), transacao.puxarData(), transacao.puxarTipo(),
+                    transacao.puxarValor(), transacao.puxarDescricao(), nomeCategoria);
         }
     }
 
     public boolean VerificarId(int numero) {
         for (int i = 0; i < listaTransacao.size(); i++) {
-            int idselecionado = listaTransacao.get(i).getId();
+            int idselecionado = listaTransacao.get(i).puxarId();
 
             if (numero == idselecionado) {
                 return true;
@@ -65,7 +65,7 @@ public class Extrato {
 
     public Transacao buscarPorId(int id) {
         for (Transacao transacao : listaTransacao) {
-            if (transacao.getId() == id) {
+            if (transacao.puxarId() == id) {
                 return transacao;
             }
         }

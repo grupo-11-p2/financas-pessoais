@@ -16,35 +16,35 @@ public class Transferencia extends Transacao {
 
     @Override
     protected void validar() {
-        if (getValor() > getConta().mostrarSaldo()) {
+        if (puxarValor() > puxarConta().mostrarSaldo()) {
             throw new IllegalStateException("Saldo insuficiente para realizar a transferência.");
         }
     }
 
     @Override
     protected void aplicarSaldo() {
-        debitar(getValor());
-        creditar(contaDestino, getValor());
+        debitar(puxarValor());
+        creditar(contaDestino, puxarValor());
     }
 
     @Override
     protected Conta[] contasAfetadas() {
-        return new Conta[] { getConta(), contaDestino };
+        return new Conta[] { puxarConta(), contaDestino };
     }
 
-    public Conta getContaDestino() {
+    public Conta puxarContaDestino() {
         return contaDestino;
     }
 
     @Override
     public void cancelar() {
-        if (contaDestino.mostrarSaldo() - getValor() < 0) {
+        if (contaDestino.mostrarSaldo() - puxarValor() < 0) {
             throw new IllegalStateException("a conta de destino não tem saldo para devolver.");
         }
-        debitar(contaDestino, getValor());
-        creditar(getValor());
+        debitar(contaDestino, puxarValor());
+        creditar(puxarValor());
         for (Conta conta : contasAfetadas()) {
-            conta.puxarExtrato().DeletarExtrato(getId());
+            conta.puxarExtrato().DeletarExtrato(puxarId());
         }
     }
 
@@ -54,9 +54,9 @@ public class Transferencia extends Transacao {
             throw new IllegalArgumentException("O valor deve ser maior que zero.");
         }
 
-        double diferenca = novoValor - getValor();
+        double diferenca = novoValor - puxarValor();
 
-        if (getConta().mostrarSaldo() - diferenca < 0) {
+        if (puxarConta().mostrarSaldo() - diferenca < 0) {
             throw new IllegalStateException("saldo insuficiente na conta de origem.");
         }
         if (contaDestino.mostrarSaldo() + diferenca < 0) {
@@ -71,7 +71,7 @@ public class Transferencia extends Transacao {
             debitar(contaDestino, -diferenca);
         }
 
-        setValor(novoValor);
+        aplicarValor(novoValor);
         return true;
     }
 }
