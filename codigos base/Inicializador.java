@@ -50,6 +50,18 @@ public class Inicializador {
                         gerarRelatorio(gerenciarContas);
                         break;
                     case 0:
+                        boolean Verificacao = gerenciarContas.VerificarDados();
+
+                        if (Verificacao == true) {
+                            System.out.println("Há dados a serem salvos. Deseja salvar?");
+                            boolean caso = Leitor.lerBool();
+
+                            if (caso) {
+                                gerenciarContas.IniciarSalvamento();
+                                System.out.println("Dados salvos com sucesso!");
+                            }
+                        }
+
                         break;
                     default:
                         System.out.println("Opção inválida!");

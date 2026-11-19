@@ -90,4 +90,19 @@ public class Leitor {
             System.out.println("O id digitado não é válido");
         }
     }
+
+    public static boolean lerBool() {
+        while (true) {
+            System.out.println("Digite (y/n): ");
+            String entrada = scanner.nextLine().trim().toUpperCase();
+
+            if (entrada.equals("Y")) {
+                return true;
+            } else if (entrada.equals("N")) {
+                return false;
+            } else {
+                System.out.println("Digite (y/n ou Y/N): ");
+            }
+        }
+    }
 }

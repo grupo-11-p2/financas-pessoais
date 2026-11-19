@@ -102,4 +102,23 @@ public class Gerenciarcontas {
     public boolean removerConta(Conta conta) {
         return listaContas.remove(conta);
     }
+
+    public void IniciarSalvamento() {
+        
+    }
+    
+    public boolean VerificarDados() {
+        boolean dadosmodificados = false;
+
+        for (int i = 0; i < listaContas.size(); i++) {
+            Conta contaselecionada = listaContas.get(i);
+            Extrato extrato = contaselecionada.puxarExtrato();
+
+            if (contaselecionada.mostrarDados() || extrato.mostrarDados()) {
+                dadosmodificados = true;
+            }
+        }
+
+        return dadosmodificados;
+    }
 }

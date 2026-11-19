@@ -3,12 +3,14 @@ import java.util.List;
 
 public class Extrato {
     private final List<Transacao> listaTransacao = new ArrayList<>();
+    private boolean dadosmudados = false;
 
     public void aplicarExtrato(Transacao transacao) {
         if (transacao == null) {
             throw new IllegalArgumentException("A transação não pode ser nula.");
         }
         listaTransacao.add(transacao);
+        dadosmudados = true;
     }
 
     public void DeletarExtrato(int IdExistente) {
@@ -18,6 +20,7 @@ public class Extrato {
                 return;
             }
         }
+        dadosmudados = true;
     }
 
     public List<Transacao> puxarListaTransacao() {
@@ -70,5 +73,9 @@ public class Extrato {
             }
         }
         return null;
+    }
+
+    public boolean mostrarDados() {
+        return dadosmudados;
     }
 }
