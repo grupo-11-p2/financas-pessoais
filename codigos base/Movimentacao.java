@@ -64,6 +64,10 @@ public class Movimentacao {
             Extrato extrato = conta.puxarExtrato();
             extrato.exibirTransacoes();
 
+            if (extrato.puxarListaTransacao().isEmpty()) {
+                return;
+            }
+
             System.out.println("\nDigite o Id da transacao que deseja cancelar:");
             int id = Leitor.lerId(extrato);
 
@@ -84,6 +88,10 @@ public class Movimentacao {
         } else {
             Extrato extrato = conta.puxarExtrato();
             extrato.exibirTransacoes();
+
+            if (extrato.puxarListaTransacao().isEmpty()) {
+                return;
+            }
 
             System.out.println("\nDigite o Id da transacao que deseja editar:");
             int id = Leitor.lerId(extrato);

@@ -45,7 +45,7 @@ public abstract class Transacao {
         do {
             valor = Leitor.lerDouble("Digite o valor: ");
             if (!Double.isFinite(valor) || valor <= 0) {
-                System.out.println("O valor deve ser maior que zero.");
+                throw new ExcecoesFinanceiras.ValorInvalidoException("O valor deve ser maior que zero.");
             }
         } while (!Double.isFinite(valor) || valor <= 0);
 

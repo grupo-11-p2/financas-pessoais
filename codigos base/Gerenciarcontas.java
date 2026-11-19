@@ -46,8 +46,7 @@ public class Gerenciarcontas {
 
     public Conta SelecionarConta() {
         if (listaContas.isEmpty()) {
-            System.out.println("Nao tem contas salvas");
-            return null;
+            throw new ExcecoesFinanceiras.ContaNaoEncontradaException("Nao tem contas salvas");
         }
 
         System.out.println("Escolha uma conta");

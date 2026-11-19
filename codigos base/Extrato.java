@@ -36,7 +36,7 @@ public class Extrato {
 
     public void exibirTransacoes() {
         if (listaTransacao.isEmpty()) {
-            System.out.println("Nenhuma transação encontrada.");
+            System.out.println("Nenhuma transação encontrada.\n");
             return;
         }
 

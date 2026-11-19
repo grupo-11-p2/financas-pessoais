@@ -17,7 +17,7 @@ public class Transferencia extends Transacao {
     @Override
     protected void validar() {
         if (puxarValor() > puxarConta().mostrarSaldo()) {
-            throw new IllegalStateException("Saldo insuficiente para realizar a transferência.");
+            throw new ExcecoesFinanceiras.SaldoInsuficienteException("Saldo insuficiente para realizar a transferência.");
         }
     }
 

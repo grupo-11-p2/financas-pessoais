@@ -6,7 +6,7 @@ public class Despesa extends Transacao {
     @Override
     protected void validar() {
         if (puxarValor() > puxarConta().mostrarSaldo()) {
-            throw new IllegalStateException("Saldo insuficiente para realizar a despesa.");
+            throw new ExcecoesFinanceiras.SaldoInsuficienteException("Saldo insuficiente para realizar a despesa.");
         }
     }
 
@@ -27,7 +27,7 @@ public class Despesa extends Transacao {
             throw new IllegalArgumentException("O valor deve ser maior que zero.");
         }
 
-        double diferenca = novoValor - puxarValor(); // positivo = a despesa aumentou
+        double diferenca = novoValor - puxarValor(); 
 
         if (puxarConta().mostrarSaldo() - diferenca < 0) {
             throw new IllegalStateException("saldo insuficiente para esse valor.");
