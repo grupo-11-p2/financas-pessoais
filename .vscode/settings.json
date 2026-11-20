@@ -5,5 +5,9 @@
     "editor.insertSpaces": true,
     "editor.tabSize": 4
     
-  }
+  },
+
+  "java.project.referencedLibraries": [
+        "lib/**/*.jar"
+    ],
 }
