@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Extrato {
     private final List<Transacao> listaTransacao = new ArrayList<>();
-    private boolean dadosmudados = false;
+    private transient boolean dadosmudados = false;
 
     public void aplicarExtrato(Transacao transacao) {
         if (transacao == null) {

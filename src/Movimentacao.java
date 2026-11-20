@@ -31,7 +31,7 @@ public class Movimentacao {
                 case 3:
                     Conta destino = gerenciarContas.SelecionarConta(conta);
                     if (destino != null) {
-                        registrarTransacao(new Transferencia(conta, destino));
+                        registrarTransacao(new Transferencia(conta, destino), destino);
                     }
                     break;
                 case 4:
@@ -50,7 +50,16 @@ public class Movimentacao {
 
     private void registrarTransacao(Transacao transacao) {
         try {
-            transacao.registrar();
+            transacao.registrar(conta);
+            System.out.println("Transação registrada com sucesso.");
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            System.out.println("Não foi possível registrar a transação: " + e.getMessage());
+        }
+    }
+
+    private void registrarTransacao(Transacao transacao, Conta contaDestino) {
+        try {
+            transacao.registrar(conta, contaDestino);
             System.out.println("Transação registrada com sucesso.");
         } catch (IllegalArgumentException | IllegalStateException e) {
             System.out.println("Não foi possível registrar a transação: " + e.getMessage());
@@ -74,7 +83,14 @@ public class Movimentacao {
             Transacao transacao = extrato.buscarPorId(id);
 
             try {
-                transacao.cancelar();
+                if (transacao instanceof Transferencia) {
+                    Transferencia transferencia = (Transferencia) transacao;
+                    Conta contaDestino = gerenciarContas.puxarContaPeloNome(
+                            transferencia.puxarNomeContaDestino());
+                    transacao.cancelar(conta, contaDestino);
+                } else {
+                    transacao.cancelar(conta);
+                }
                 System.out.println("Transação cancelada com sucesso.");
             } catch (IllegalStateException e) {
                 System.out.println("Não foi possível cancelar a transação: " + e.getMessage());
@@ -101,13 +117,26 @@ public class Movimentacao {
             Transacao transacao = extrato.buscarPorId(id);
 
             try {
-                if (transacao.editar(novoValor)) {
+                boolean editada;
+                if (transacao instanceof Transferencia) {
+                    Transferencia transferencia = (Transferencia) transacao;
+                    Conta contaDestino = gerenciarContas.puxarContaPeloNome(
+                            transferencia.puxarNomeContaDestino());
+                    editada = transacao.editar(conta, contaDestino, novoValor);
+                } else {
+                    editada = transacao.editar(conta, novoValor);
+                }
+                if (editada) {
                     System.out.println("Transação editada com sucesso.");
                 }
             } catch (IllegalArgumentException | IllegalStateException e) {
                 System.out.println("Não foi possível editar a transação: " + e.getMessage());
             }
         }
+    }
+
+    public Conta PuxarConta() {
+        return conta;
     }
 }
 

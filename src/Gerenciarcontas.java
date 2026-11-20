@@ -3,6 +3,7 @@ import java.util.List;
 
 public class Gerenciarcontas {
     private final List<Conta> listaContas = new ArrayList<Conta>();
+    Gerenciararquivos gerenciararquivos = new Gerenciararquivos();
 
     public void criarConta() {
 
@@ -42,6 +43,18 @@ public class Gerenciarcontas {
 
     public List<Conta> mostrarContas() {
         return new ArrayList<Conta>(listaContas);
+    }
+
+    public Conta puxarContaPeloNome(String nomeConta) {
+        if (nomeConta == null) {
+            return null;
+        }
+        for (Conta conta : listaContas) {
+            if (nomeConta.equals(conta.mostrarNome())) {
+                return conta;
+            }
+        }
+        return null;
     }
 
     public Conta SelecionarConta() {
@@ -104,9 +117,9 @@ public class Gerenciarcontas {
     }
 
     public void IniciarSalvamento() {
-        
+        gerenciararquivos.salvarDados(listaContas);
     }
-    
+
     public boolean VerificarDados() {
         boolean dadosmodificados = false;
 
@@ -120,5 +133,11 @@ public class Gerenciarcontas {
         }
 
         return dadosmodificados;
+    }
+
+    public void RecuperarDados() {
+        List<Conta> Contas = gerenciararquivos.puxarDados();
+        listaContas.clear();
+        listaContas.addAll(Contas);
     }
 }

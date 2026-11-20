@@ -5,7 +5,7 @@ public abstract class Transacao {
     private static int contadorId;
 
     private final int id;
-    private final Conta conta;
+    private final String nomeConta;
     private final String tipo;
     private LocalDate data;
     private double valor;
@@ -16,16 +16,20 @@ public abstract class Transacao {
         if (conta == null) {
             throw new IllegalArgumentException("A conta não pode ser nula.");
         }
-        this.conta = conta;
+        nomeConta = conta.mostrarNome();
         this.tipo = tipo;
         this.id = ++contadorId;
     }
 
-    public final void registrar() {
+    public final void registrar(Conta conta) {
+        registrar(conta, null);
+    }
+
+    public final void registrar(Conta conta, Conta contaDestino) {
         definirDados();
-        validar();
-        aplicarSaldo();
-        for (Conta contaAfetada : contasAfetadas()) {
+        validar(conta, contaDestino);
+        aplicarSaldo(conta, contaDestino);
+        for (Conta contaAfetada : contasAfetadas(conta, contaDestino)) {
             contaAfetada.puxarExtrato().aplicarExtrato(this);
         }
     }
@@ -59,33 +63,41 @@ public abstract class Transacao {
         }
     }
 
-    protected abstract void validar();
+    protected abstract void validar(Conta conta);
 
-    protected abstract void aplicarSaldo();
+    protected abstract void aplicarSaldo(Conta conta);
 
-    public abstract void cancelar();
+    public abstract void cancelar(Conta conta);
 
-    public abstract boolean editar(double novoValor);
+    public abstract boolean editar(Conta conta, double novoValor);
 
-    protected Conta[] contasAfetadas() {
+    protected void validar(Conta conta, Conta contaDestino) {
+        validar(conta);
+    }
+
+    protected void aplicarSaldo(Conta conta, Conta contaDestino) {
+        aplicarSaldo(conta);
+    }
+
+    protected Conta[] contasAfetadas(Conta conta, Conta contaDestino) {
+        return contasAfetadas(conta);
+    }
+
+    public void cancelar(Conta conta, Conta contaDestino) {
+        cancelar(conta);
+    }
+
+    public boolean editar(Conta conta, Conta contaDestino, double novoValor) {
+        return editar(conta, novoValor);
+    }
+
+    protected Conta[] contasAfetadas(Conta conta) {
         return new Conta[] { conta };
-    }
-
-    protected final Conta puxarConta() {
-        return conta;
-    }
-
-    protected final void creditar(double valor) {
-        creditar(conta, valor);
     }
 
     protected final void creditar(Conta conta, double valor) {
         validarOperacaoSaldo(conta, valor);
         conta.aplicarSaldo(conta.mostrarSaldo() + valor);
-    }
-
-    protected final void debitar(double valor) {
-        debitar(conta, valor);
     }
 
     protected final void debitar(Conta conta, double valor) {
@@ -138,10 +150,6 @@ public abstract class Transacao {
 
     public final Categoria puxarCategoria() {
         return categoria;
-    }
-
-    public final Conta puxarContaRelacionada() {
-        return conta;
     }
 
     public final String puxarTipo() {

@@ -4,42 +4,42 @@ public class Receita extends Transacao {
     }
 
     @Override
-    protected void validar() {
+    protected void validar(Conta conta) {
     }
 
     @Override
-    protected void aplicarSaldo() {
-        creditar(puxarValor());
+    protected void aplicarSaldo(Conta conta) {
+        creditar(conta, puxarValor());
     }
 
 
     
 
     @Override
-    public void cancelar() {
-        if (puxarConta().mostrarSaldo() - puxarValor() < 0) {
+    public void cancelar(Conta conta) {
+        if (conta.mostrarSaldo() - puxarValor() < 0) {
             throw new IllegalStateException("o saldo ficaria negativo.");
         }
-        debitar(puxarValor());
-        puxarConta().puxarExtrato().DeletarExtrato(puxarId());
+        debitar(conta, puxarValor());
+        conta.puxarExtrato().DeletarExtrato(puxarId());
     }
 
     @Override
-    public boolean editar(double novoValor) {
+    public boolean editar(Conta conta, double novoValor) {
         if (novoValor <= 0) {
             throw new IllegalArgumentException("O valor deve ser maior que zero.");
         }
 
         double diferenca = novoValor - puxarValor();
 
-        if (puxarConta().mostrarSaldo() + diferenca < 0) {
+        if (conta.mostrarSaldo() + diferenca < 0) {
             throw new IllegalStateException("o saldo ficaria negativo.");
         }
 
         if (diferenca > 0) {
-            creditar(diferenca);
+            creditar(conta, diferenca);
         } else if (diferenca < 0) {
-            debitar(-diferenca);
+            debitar(conta, -diferenca);
         }
 
         aplicarValor(novoValor);

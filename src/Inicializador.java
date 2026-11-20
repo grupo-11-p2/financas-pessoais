@@ -5,10 +5,12 @@ public class Inicializador {
         int opcao = -1;
 
         boolean Exibido = false;
+        gerenciarContas.RecuperarDados();
 
         do {
             if (gerenciarContas.mostrarContas().isEmpty()) {
                 if (Exibido == false) {
+
                     System.out.println("Olá, seja bem-vindo ao sistema!");
                     System.out.println("\nPor favor, escolha uma das opções abaixo:");
 
