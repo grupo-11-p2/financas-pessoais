@@ -92,7 +92,7 @@ public class Movimentacao {
                     transacao.cancelar(conta);
                 }
                 System.out.println("Transação cancelada com sucesso.");
-            } catch (IllegalStateException e) {
+            } catch (IllegalArgumentException | IllegalStateException e) {
                 System.out.println("Não foi possível cancelar a transação: " + e.getMessage());
             }
         }

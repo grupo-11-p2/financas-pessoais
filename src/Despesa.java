@@ -24,13 +24,13 @@ public class Despesa extends Transacao {
     @Override
     public boolean editar(Conta conta, double novoValor) {
         if (!Double.isFinite(novoValor) || novoValor <= 0) {
-            throw new IllegalArgumentException("O valor deve ser maior que zero.");
+            throw new ExcecoesFinanceiras.ValorInvalidoException("O valor deve ser maior que zero.");
         }
 
         double diferenca = novoValor - puxarValor(); 
 
         if (conta.mostrarSaldo() - diferenca < 0) {
-            throw new IllegalStateException("saldo insuficiente para esse valor.");
+            throw new ExcecoesFinanceiras.SaldoInsuficienteException("saldo insuficiente para esse valor.");
         }
 
         if (diferenca > 0) {

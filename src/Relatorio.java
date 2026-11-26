@@ -30,7 +30,7 @@ public class Relatorio {
             throw new IllegalArgumentException("O extrato não pode ser nulo.");
         }
         if (tipo == null || tipo.trim().isEmpty()) {
-            throw new IllegalArgumentException("O tipo da transação não pode ser vazio.");
+            throw new ExcecoesFinanceiras.ValorInvalidoException("O tipo da transação não pode ser vazio.");
         }
 
         double total = 0.0;
@@ -182,13 +182,13 @@ public class Relatorio {
 
     private void validarMes(int mes) {
         if (mes < 1 || mes > 12) {
-            throw new IllegalArgumentException("O mês deve estar entre 1 e 12.");
+            throw new ExcecoesFinanceiras.ValorInvalidoException("O mês deve estar entre 1 e 12.");
         }
     }
 
     private void validarAno(int ano) {
         if (ano < 1) {
-            throw new IllegalArgumentException("O ano deve ser maior que zero.");
+            throw new ExcecoesFinanceiras.ValorInvalidoException("O ano deve ser maior que zero.");
         }
     }
 

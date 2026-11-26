@@ -103,7 +103,7 @@ public abstract class Transacao {
     protected final void debitar(Conta conta, double valor) {
         validarOperacaoSaldo(conta, valor);
         if (valor > conta.mostrarSaldo()) {
-            throw new IllegalStateException("Saldo insuficiente.");
+            throw new ExcecoesFinanceiras.SaldoInsuficienteException("Saldo insuficiente.");
         }
         conta.aplicarSaldo(conta.mostrarSaldo() - valor);
     }
@@ -113,7 +113,7 @@ public abstract class Transacao {
             throw new IllegalArgumentException("A conta não pode ser nula.");
         }
         if (!Double.isFinite(valor) || valor <= 0) {
-            throw new IllegalArgumentException("O valor deve ser maior que zero.");
+            throw new ExcecoesFinanceiras.ValorInvalidoException("O valor deve ser maior que zero.");
         }
     }
 
@@ -139,7 +139,7 @@ public abstract class Transacao {
 
     protected void aplicarValor(double valor) {
         if (!Double.isFinite(valor) || valor <= 0) {
-            throw new IllegalArgumentException("O valor deve ser maior que zero.");
+            throw new ExcecoesFinanceiras.ValorInvalidoException("O valor deve ser maior que zero.");
         }
         this.valor = valor;
     }

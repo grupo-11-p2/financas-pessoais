@@ -77,7 +77,7 @@ public class Transferencia extends Transacao {
             throw new IllegalArgumentException("A conta de origem e a conta de destino não podem ser nulas.");
         }
         if (contaDestino.mostrarSaldo() - puxarValor() < 0) {
-            throw new IllegalStateException("a conta de destino não tem saldo para devolver.");
+            throw new ExcecoesFinanceiras.SaldoInsuficienteException("a conta de destino não tem saldo para devolver.");
         }
         debitar(contaDestino, puxarValor());
         creditar(conta, puxarValor());
@@ -100,16 +100,16 @@ public class Transferencia extends Transacao {
             throw new IllegalArgumentException("A conta de destino não pode ser nula.");
         }
         if (!Double.isFinite(novoValor) || novoValor <= 0) {
-            throw new IllegalArgumentException("O valor deve ser maior que zero.");
+            throw new ExcecoesFinanceiras.ValorInvalidoException("O valor deve ser maior que zero.");
         }
 
         double diferenca = novoValor - puxarValor();
 
         if (conta.mostrarSaldo() - diferenca < 0) {
-            throw new IllegalStateException("saldo insuficiente na conta de origem.");
+            throw new ExcecoesFinanceiras.SaldoInsuficienteException("saldo insuficiente na conta de origem.");
         }
         if (contaDestino.mostrarSaldo() + diferenca < 0) {
-            throw new IllegalStateException("a conta de destino não tem saldo para devolver.");
+            throw new ExcecoesFinanceiras.SaldoInsuficienteException("a conta de destino não tem saldo para devolver.");
         }
 
         if (diferenca > 0) {
