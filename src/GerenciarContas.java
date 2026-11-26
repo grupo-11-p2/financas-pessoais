@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GerenciarContas {
+
     private final List<Conta> listaContas = new ArrayList<Conta>();
     private final GerenciarArquivos gerenciarArquivos = new GerenciarArquivos();
     private transient boolean dadosmudados = false;
