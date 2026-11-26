@@ -121,6 +121,10 @@ public abstract class Transacao {
         return id;
     }
 
+    public final String puxarNomeConta() {
+        return nomeConta;
+    }
+
     public final LocalDate puxarData() {
         return data;
     }

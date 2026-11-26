@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+
 public class Inicializador {
     public static void main(String[] args) {
         GerenciarContas gerenciarContas = new GerenciarContas();
@@ -5,7 +7,14 @@ public class Inicializador {
         int opcao = -1;
 
         boolean Exibido = false;
-        gerenciarContas.recuperarDados();
+        try {
+            gerenciarContas.recuperarDados();
+        } catch (ExcecoesFinanceiras.ArquivoDadosException e) {
+            System.out.println(e.getMessage());
+            if (!(e.getCause() instanceof FileNotFoundException)) {
+                return;
+            }
+        }
 
         do {
             if (gerenciarContas.mostrarContas().isEmpty()) {
@@ -31,9 +40,10 @@ public class Inicializador {
                 System.out.println("\nPor favor, escolha uma das opções abaixo:");
 
                 System.out.println("1- Criar conta");
-                System.out.println("2- Lançamento");
-                System.out.println("3- Extrato");
-                System.out.println("4- Relatorio");
+                System.out.println("2- Excluir conta");
+                System.out.println("3- Lançamento");
+                System.out.println("4- Extrato");
+                System.out.println("5- Relatorio");
 
                 System.out.println("0 - Sair");
 
@@ -43,12 +53,15 @@ public class Inicializador {
                         gerenciarContas.criarConta();
                         break;
                     case 2:
-                        movimentacao.iniciarLancamento();
+                        excluirConta(gerenciarContas);
                         break;
                     case 3:
-                        exibirExtrato(gerenciarContas);
+                        movimentacao.iniciarLancamento();
                         break;
                     case 4:
+                        exibirExtrato(gerenciarContas);
+                        break;
+                    case 5:
                         gerarRelatorio(gerenciarContas);
                         break;
                     case 0:
@@ -89,5 +102,20 @@ public class Inicializador {
         }
 
         new Relatorio(conta.puxarExtrato()).gerarRelatorio(conta.mostrarNome());
+    }
+
+    private static void excluirConta(GerenciarContas gerenciarContas) {
+        Conta conta = gerenciarContas.selecionarConta();
+        if (conta == null) {
+            return;
+        }
+
+        try {
+            if (gerenciarContas.removerConta(conta)) {
+                System.out.println("Conta excluída com sucesso.");
+            }
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            System.out.println("Não foi possível excluir a conta: " + e.getMessage());
+        }
     }
 }

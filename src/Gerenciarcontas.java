@@ -1,9 +1,12 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GerenciarContas {
     private final List<Conta> listaContas = new ArrayList<Conta>();
     private final GerenciarArquivos gerenciarArquivos = new GerenciarArquivos();
+    private transient boolean dadosmudados = false;
 
     public void criarConta() {
 
@@ -37,6 +40,7 @@ public class GerenciarContas {
         conta.aplicarNome(NomeConta);
 
         listaContas.add(conta);
+        dadosmudados = true;
 
         System.out.println(listaContas.size());
     }
@@ -113,7 +117,53 @@ public class GerenciarContas {
     }
 
     public boolean removerConta(Conta conta) {
-        return listaContas.remove(conta);
+        if (!listaContas.contains(conta)) {
+            return false;
+        }
+
+        List<Transferencia> transferencias = new ArrayList<>();
+        Map<Conta, Double> saldosAposCancelamento = new HashMap<>();
+        for (Transacao transacao : conta.puxarExtrato().puxarListaTransacao()) {
+            if (!(transacao instanceof Transferencia)) {
+                continue;
+            }
+
+            Transferencia transferencia = (Transferencia) transacao;
+            Conta origem = puxarContaPeloNome(transferencia.puxarNomeConta());
+            Conta destino = puxarContaPeloNome(transferencia.puxarNomeContaDestino());
+            if (origem == null || destino == null || origem == destino
+                    || (origem != conta && destino != conta)) {
+                throw new IllegalStateException("Não foi possível localizar as contas da transferência.");
+            }
+
+            double saldoDestino = saldosAposCancelamento.containsKey(destino)
+                    ? saldosAposCancelamento.get(destino)
+                    : destino.mostrarSaldo();
+            if (saldoDestino - transferencia.puxarValor() < 0) {
+                throw new ExcecoesFinanceiras.SaldoInsuficienteException(
+                        "A conta não pode ser excluída: cancelar a transferência deixaria a conta "
+                                + destino.mostrarNome() + " com saldo negativo.");
+            }
+
+            saldosAposCancelamento.put(destino, saldoDestino - transferencia.puxarValor());
+            double saldoOrigem = saldosAposCancelamento.containsKey(origem)
+                    ? saldosAposCancelamento.get(origem)
+                    : origem.mostrarSaldo();
+            saldosAposCancelamento.put(origem, saldoOrigem + transferencia.puxarValor());
+            transferencias.add(transferencia);
+        }
+
+        for (Transferencia transferencia : transferencias) {
+            Conta origem = puxarContaPeloNome(transferencia.puxarNomeConta());
+            Conta destino = puxarContaPeloNome(transferencia.puxarNomeContaDestino());
+            transferencia.cancelar(origem, destino);
+        }
+
+        boolean removida = listaContas.remove(conta);
+        if (removida) {
+            dadosmudados = true;
+        }
+        return removida;
     }
 
     public void iniciarSalvamento() {
@@ -121,7 +171,7 @@ public class GerenciarContas {
     }
 
     public boolean verificarDados() {
-        boolean dadosmodificados = false;
+        boolean dadosmodificados = dadosmudados;
 
         for (int i = 0; i < listaContas.size(); i++) {
             Conta contaselecionada = listaContas.get(i);
@@ -139,5 +189,6 @@ public class GerenciarContas {
         List<Conta> contas = gerenciarArquivos.puxarDados();
         listaContas.clear();
         listaContas.addAll(contas);
+        dadosmudados = false;
     }
 }

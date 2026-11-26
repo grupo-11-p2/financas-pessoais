@@ -1,5 +1,15 @@
 public class ExcecoesFinanceiras {
 
+    public static class ArquivoDadosException extends RuntimeException {
+        public ArquivoDadosException(String mensagem) {
+            super(mensagem);
+        }
+
+        public ArquivoDadosException(String mensagem, Throwable causa) {
+            super(mensagem, causa);
+        }
+    }
+
     public static class ValorInvalidoException extends IllegalArgumentException {
         public ValorInvalidoException(String mensagem) {
             super(mensagem);

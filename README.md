@@ -18,7 +18,7 @@ Nesta etapa, a aplicação roda em **modo texto (console)**. A versão final ter
 
 ## ✨ Funcionalidades
 
-- Criação e gerenciamento de múltiplas contas
+- Criação, gerenciamento e remoção de múltiplas contas
 - Registro de **receitas**, **despesas** e **transferências** entre contas
 - **Edição e cancelamento** de transações, com validação de saldo
 - Extrato por conta, com busca de transação por **ID**
@@ -92,5 +92,5 @@ java Inicializador
 - [x] Extrato, busca por ID e filtros
 - [x] Relatórios por período e categoria
 - [x] Persistência em JSON
-- [ ] Remoção de conta na interface (já implementada no backend)
+- [x] Remoção de conta pelo menu, com cancelamento de transferências
 - [ ] Interface gráfica / web

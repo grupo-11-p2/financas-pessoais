@@ -4,8 +4,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 class LocalDateAdapter implements JsonSerializer<LocalDate>, JsonDeserializer<LocalDate> {
@@ -75,11 +75,18 @@ public class GerenciarArquivos {
 
             List<Conta> contas = gson.fromJson(leitor, tipo);
 
-            return contas == null ? new ArrayList<>() : contas;
+            if (contas == null) {
+                throw new ExcecoesFinanceiras.ArquivoDadosException(
+                        "ArquivoDadosException: o arquivo não existe, está estragado ou tem formato errado.");
+            }
+            return contas;
 
-        } catch (IOException e) {
-            System.out.println("Erro ao carregar: " + e.getMessage());
-            return new ArrayList<>();
+        } catch (FileNotFoundException e) {
+            throw new ExcecoesFinanceiras.ArquivoDadosException(
+                    "ArquivoDadosException: o arquivo não existe, está estragado ou tem formato errado.", e);
+        } catch (IOException | JsonParseException | DateTimeParseException e) {
+            throw new ExcecoesFinanceiras.ArquivoDadosException(
+                    "ArquivoDadosException: o arquivo não existe, está estragado ou tem formato errado.", e);
         }
     }
 }

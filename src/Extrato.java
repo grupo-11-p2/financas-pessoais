@@ -17,10 +17,10 @@ public class Extrato {
         for (int i = 0; i < listaTransacao.size(); i++) {
             if (listaTransacao.get(i).puxarId() == idExistente) {
                 listaTransacao.remove(i);
+                dadosmudados = true;
                 return;
             }
         }
-        dadosmudados = true;
     }
 
     public List<Transacao> puxarListaTransacao() {
