@@ -1,44 +1,9 @@
 [
   {
     "nome": "CAIO",
-    "saldo": 4950.0,
+    "saldo": 0.0,
     "extrato": {
-      "listaTransacao": [
-        {
-          "id": 1,
-          "nomeConta": "CAIO",
-          "tipo": "Receita",
-          "data": "2026-12-04",
-          "valor": 5000.0,
-          "descricao": ""
-        },
-        {
-          "nomeContaDestino": "RYAN",
-          "id": 2,
-          "nomeConta": "CAIO",
-          "tipo": "Transferencia",
-          "data": "2026-12-03",
-          "valor": 50.0,
-          "descricao": ""
-        }
-      ]
-    }
-  },
-  {
-    "nome": "RYAN",
-    "saldo": 50.0,
-    "extrato": {
-      "listaTransacao": [
-        {
-          "nomeContaDestino": "RYAN",
-          "id": 2,
-          "nomeConta": "CAIO",
-          "tipo": "Transferencia",
-          "data": "2026-12-03",
-          "valor": 100.0,
-          "descricao": ""
-        }
-      ]
+      "listaTransacao": []
     }
   }
 ]

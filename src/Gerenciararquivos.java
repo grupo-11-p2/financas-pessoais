@@ -22,7 +22,7 @@ class LocalDateAdapter implements JsonSerializer<LocalDate>, JsonDeserializer<Lo
 }
 
 
-class Gerenciararquivos {
+public class GerenciarArquivos {
     private static final JsonDeserializer<Transacao> ADAPTADOR_TRANSACAO =
             (json, tipo, contexto) -> {
 

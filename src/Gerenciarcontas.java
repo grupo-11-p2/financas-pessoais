@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Gerenciarcontas {
+public class GerenciarContas {
     private final List<Conta> listaContas = new ArrayList<Conta>();
-    Gerenciararquivos gerenciararquivos = new Gerenciararquivos();
+    private final GerenciarArquivos gerenciarArquivos = new GerenciarArquivos();
 
     public void criarConta() {
 
@@ -57,7 +57,7 @@ public class Gerenciarcontas {
         return null;
     }
 
-    public Conta SelecionarConta() {
+    public Conta selecionarConta() {
         if (listaContas.isEmpty()) {
             throw new ExcecoesFinanceiras.ContaNaoEncontradaException("Nao tem contas salvas");
         }
@@ -81,7 +81,7 @@ public class Gerenciarcontas {
         }
     }
 
-    public Conta SelecionarConta(Conta contaExcluir) {
+    public Conta selecionarConta(Conta contaExcluir) {
         List<Conta> contasDisponiveis = new ArrayList<>();
         for (Conta conta : listaContas) {
             if (conta != contaExcluir) {
@@ -116,11 +116,11 @@ public class Gerenciarcontas {
         return listaContas.remove(conta);
     }
 
-    public void IniciarSalvamento() {
-        gerenciararquivos.salvarDados(listaContas);
+    public void iniciarSalvamento() {
+        gerenciarArquivos.salvarDados(listaContas);
     }
 
-    public boolean VerificarDados() {
+    public boolean verificarDados() {
         boolean dadosmodificados = false;
 
         for (int i = 0; i < listaContas.size(); i++) {
@@ -135,9 +135,9 @@ public class Gerenciarcontas {
         return dadosmodificados;
     }
 
-    public void RecuperarDados() {
-        List<Conta> Contas = gerenciararquivos.puxarDados();
+    public void recuperarDados() {
+        List<Conta> contas = gerenciarArquivos.puxarDados();
         listaContas.clear();
-        listaContas.addAll(Contas);
+        listaContas.addAll(contas);
     }
 }

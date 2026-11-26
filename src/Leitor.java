@@ -83,7 +83,7 @@ public class Leitor {
         while (true) {
             int entrada = lerInteiro();
 
-            if (entrada > 0 && extrato.VerificarId(entrada)) {
+            if (entrada > 0 && extrato.verificarId(entrada)) {
                 return entrada;
             }
 

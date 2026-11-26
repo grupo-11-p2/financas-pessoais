@@ -21,7 +21,7 @@ public class Receita extends Transacao {
             throw new IllegalStateException("o saldo ficaria negativo.");
         }
         debitar(conta, puxarValor());
-        conta.puxarExtrato().DeletarExtrato(puxarId());
+        conta.puxarExtrato().deletarExtrato(puxarId());
     }
 
     @Override

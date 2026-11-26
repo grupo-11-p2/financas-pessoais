@@ -1,14 +1,14 @@
 public class Movimentacao {
-    private Gerenciarcontas gerenciarContas;
+    private GerenciarContas gerenciarContas;
     private static int opcao;
     private Conta conta;
 
-    public Movimentacao(Gerenciarcontas gerenciarContas) {
+    public Movimentacao(GerenciarContas gerenciarContas) {
         this.gerenciarContas = gerenciarContas;
     }
 
-    public void IniciarLancamento() {
-        conta = gerenciarContas.SelecionarConta();
+    public void iniciarLancamento() {
+        conta = gerenciarContas.selecionarConta();
         if (conta == null) {
             return;
         }
@@ -29,7 +29,7 @@ public class Movimentacao {
                     registrarTransacao(new Despesa(conta));
                     break;
                 case 3:
-                    Conta destino = gerenciarContas.SelecionarConta(conta);
+                    Conta destino = gerenciarContas.selecionarConta(conta);
                     if (destino != null) {
                         registrarTransacao(new Transferencia(conta, destino), destino);
                     }
@@ -135,7 +135,7 @@ public class Movimentacao {
         }
     }
 
-    public Conta PuxarConta() {
+    public Conta puxarConta() {
         return conta;
     }
 }
@@ -143,9 +143,9 @@ public class Movimentacao {
 /*
  * int numero =
  * Leitor.lerInteiro("\nDigite o Id da transacao que deseja modificar:");
- * extrato.DeletarExtrato(numero);
+ * extrato.deletarExtrato(numero);
  * 
  * do{
  * numero = Leitor.lerInteiro();
- * }while (extrato.VerificarId(numero));
+ * }while (extrato.verificarId(numero));
  */

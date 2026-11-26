@@ -13,9 +13,9 @@ public class Extrato {
         dadosmudados = true;
     }
 
-    public void DeletarExtrato(int IdExistente) {
+    public void deletarExtrato(int idExistente) {
         for (int i = 0; i < listaTransacao.size(); i++) {
-            if (listaTransacao.get(i).puxarId() == IdExistente) {
+            if (listaTransacao.get(i).puxarId() == idExistente) {
                 listaTransacao.remove(i);
                 return;
             }
@@ -54,7 +54,7 @@ public class Extrato {
         }
     }
 
-    public boolean VerificarId(int numero) {
+    public boolean verificarId(int numero) {
         for (int i = 0; i < listaTransacao.size(); i++) {
             int idselecionado = listaTransacao.get(i).puxarId();
 

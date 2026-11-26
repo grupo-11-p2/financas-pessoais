@@ -1,11 +1,11 @@
 public class Inicializador {
     public static void main(String[] args) {
-        Gerenciarcontas gerenciarContas = new Gerenciarcontas();
+        GerenciarContas gerenciarContas = new GerenciarContas();
         Movimentacao movimentacao = new Movimentacao(gerenciarContas);
         int opcao = -1;
 
         boolean Exibido = false;
-        gerenciarContas.RecuperarDados();
+        gerenciarContas.recuperarDados();
 
         do {
             if (gerenciarContas.mostrarContas().isEmpty()) {
@@ -43,7 +43,7 @@ public class Inicializador {
                         gerenciarContas.criarConta();
                         break;
                     case 2:
-                        movimentacao.IniciarLancamento();
+                        movimentacao.iniciarLancamento();
                         break;
                     case 3:
                         exibirExtrato(gerenciarContas);
@@ -52,14 +52,14 @@ public class Inicializador {
                         gerarRelatorio(gerenciarContas);
                         break;
                     case 0:
-                        boolean Verificacao = gerenciarContas.VerificarDados();
+                        boolean Verificacao = gerenciarContas.verificarDados();
 
                         if (Verificacao == true) {
                             System.out.println("Há dados a serem salvos. Deseja salvar?");
                             boolean caso = Leitor.lerBool();
 
                             if (caso) {
-                                gerenciarContas.IniciarSalvamento();
+                                gerenciarContas.iniciarSalvamento();
                                 System.out.println("Dados salvos com sucesso!");
                             }
                         }
@@ -73,8 +73,8 @@ public class Inicializador {
         } while (opcao != 0);
     }
 
-    private static void exibirExtrato(Gerenciarcontas gerenciarContas) {
-        Conta conta = gerenciarContas.SelecionarConta();
+    private static void exibirExtrato(GerenciarContas gerenciarContas) {
+        Conta conta = gerenciarContas.selecionarConta();
         if (conta == null) {
             return;
         }
@@ -82,8 +82,8 @@ public class Inicializador {
         conta.puxarExtrato().exibir(conta);
     }
 
-    private static void gerarRelatorio(Gerenciarcontas gerenciarContas) {
-        Conta conta = gerenciarContas.SelecionarConta();
+    private static void gerarRelatorio(GerenciarContas gerenciarContas) {
+        Conta conta = gerenciarContas.selecionarConta();
         if (conta == null) {
             return;
         }

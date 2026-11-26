@@ -18,7 +18,7 @@ public class Despesa extends Transacao {
     @Override
     public void cancelar(Conta conta) {
         creditar(conta, puxarValor());
-        conta.puxarExtrato().DeletarExtrato(puxarId());
+        conta.puxarExtrato().deletarExtrato(puxarId());
     }
 
     @Override

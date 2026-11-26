@@ -82,7 +82,7 @@ public class Transferencia extends Transacao {
         debitar(contaDestino, puxarValor());
         creditar(conta, puxarValor());
         for (Conta contaAfetada : contasAfetadas(conta, contaDestino)) {
-            contaAfetada.puxarExtrato().DeletarExtrato(puxarId());
+            contaAfetada.puxarExtrato().deletarExtrato(puxarId());
         }
     }
 
